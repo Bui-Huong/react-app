@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import PostPage from "./Pages/PostPage/PostPage";
 import PostsPage from "./Pages/PostsPage/PostsPage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
-import React from "react";
+
 import {
     BrowserRouter,
     Routes,
