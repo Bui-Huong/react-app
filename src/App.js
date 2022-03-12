@@ -1,6 +1,7 @@
 import Home from "./Components/Home/Home";
 import HomePage from "./Pages/HomePage/HomePage";
 import { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PostPage from "./Pages/PostPage/PostPage";
 import PostsPage from "./Pages/PostsPage/PostsPage";

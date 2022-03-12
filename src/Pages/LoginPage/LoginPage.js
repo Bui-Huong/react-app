@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-
 const validateEmail= email =>{
     if(!email) return 'Required'
     const isValidEmail = String(email)

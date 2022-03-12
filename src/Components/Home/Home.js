@@ -1,4 +1,4 @@
-
+import React from "react";
 const Home = ({ color }) => {
     return (
         <div style={{ backgroundColor: color }}>
