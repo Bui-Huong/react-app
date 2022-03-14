@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import PostPage from "./Pages/PostPage/PostPage";
 import PostsPage from "./Pages/PostsPage/PostsPage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 
 import {
     BrowserRouter,
@@ -18,6 +19,7 @@ const PATHS = {
     Post:'/post/:id',
     Posts:'/posts',
     Login:'/login',
+    Profile:'/profile',
 }
 const router =[{
     path: PATHS.Home,
@@ -35,6 +37,10 @@ const router =[{
     path: PATHS.Posts,
     element:(<PostsPage/>)
 },
+{
+    path: PATHS.Profile,
+    element:(<ProfilePage/>)
+},
 
 ];
 const navbarItems =[{
@@ -48,6 +54,10 @@ const navbarItems =[{
 {
     to: PATHS.Posts,
     title: 'posts'
+},
+{
+    to: PATHS.Profile,
+    title: 'profile'
 },
 
 ]
