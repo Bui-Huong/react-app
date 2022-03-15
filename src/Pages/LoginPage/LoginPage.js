@@ -1,4 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState,createContext } from 'react';
+import axios, { Axios } from "axios";
+import { AuthContext } from "../../App";
+
+
 const validateEmail= email =>{
     if(!email) return 'Required'
     const isValidEmail = String(email)
@@ -15,10 +19,13 @@ const validatePassword = password =>{
     return '';
 };
 const LoginPage = () =>{
-    const [values, setValues] = useState({
-        email:'',
-        password:'',
-    });
+    const {setLoginState}=React.useContext(AuthContext);
+    const initialState = {
+        email: '',
+        password: '',
+    };
+    
+    const [values, setValues] = useState(initialState);
     const [touched,setTouched] = useState({
         email: false,
         password:false,
@@ -43,6 +50,19 @@ const LoginPage = () =>{
     const handleOnSubmit = evt =>{
         evt.preventDefault();
         console.log('values = ', values);
+        setValues({
+            ...values,
+        });
+        axios(
+            {
+            url: 'https://60dff0ba6b689e001788c858.mockapi.io/tokens',
+            method:'GET'
+    })
+    .then(resJson=>{
+        setLoginState(resJson);
+        console.log('resJson: ', resJson);
+        axios.defaults.headers.common['Authorization']=resJson.data
+    })     
     };
     const isFormValid = errors.email || errors.password;
 
@@ -74,6 +94,7 @@ const LoginPage = () =>{
 
                 <button disabled ={isFormValid} style={{display:'block', margin:'20px'}} type ="submit">Submit</button>
             </form>
+            
         </div>
     )
 }

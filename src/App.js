@@ -1,7 +1,6 @@
 import Home from "./Components/Home/Home";
 import HomePage from "./Pages/HomePage/HomePage";
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PostPage from "./Pages/PostPage/PostPage";
 import PostsPage from "./Pages/PostsPage/PostsPage";
@@ -13,37 +12,43 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+export const AuthContext = React.createContext();
+const initialState = {
+    isAuthenticated: false,
+    userId: null,
+    token: null
+};
 
 const PATHS = {
     Home: '/',
-    Post:'/post/:id',
-    Posts:'/posts',
-    Login:'/login',
-    Profile:'/profile',
+    Post: '/post/:id',
+    Posts: '/posts',
+    Login: '/login',
+    Profile: '/profile',
 }
-const router =[{
+const router = [{
     path: PATHS.Home,
-    element:(<HomePage/>)
+    element: (<HomePage />)
 },
 {
     path: PATHS.Login,
-    element:(<LoginPage/>)
+    element: (<LoginPage />)
 },
 {
     path: PATHS.Post,
-    element:(<PostPage/>)
+    element: (<PostPage />)
 },
 {
     path: PATHS.Posts,
-    element:(<PostsPage/>)
+    element: (<PostsPage />)
 },
 {
     path: PATHS.Profile,
-    element:(<ProfilePage/>)
+    element: (<ProfilePage />)
 },
 
 ];
-const navbarItems =[{
+const navbarItems = [{
     to: PATHS.Home,
     title: 'home'
 },
@@ -62,43 +67,28 @@ const navbarItems =[{
 
 ]
 const App = () => {
-
-    // const getPage = () =>{
-    //     switch(pageSelected){
-    //         case OPTIONS.Home: return<HomePage/>
-    //         case OPTIONS.Post: return<PostPage/>
-    //         case OPTIONS.Posts: return<PostsPage/>
-    //         case OPTIONS.Login: return<LoginPage/>
-    //         default: return <div>You need to enable JavaScript to run this app</div>
-    //     }
-    // }
+    const [loginState, setLoginState] = useState(initialState);
     return (
         <div>
-              <BrowserRouter>
-                <ul style={{display:'flex'}}>
-                    { navbarItems.map(item=>(
-                        <li style={{margin:20}}><Link to={item.to}>{item.title}</Link></li>
-                    ))
-                    }
-                    {/* <li style={{margin:20}}><Link to="/">Home</Link></li>
-                    <li style={{margin:20}}><Link to="/post">PostPage</Link></li>
-                    <li style={{margin:20}}><Link to="/posts">PostsPage</Link></li>
-                    <li style={{margin:20}}><Link to="/login">LoginPage</Link></li> */}
-                </ul>
-                <Routes>
-                    {router.map(route =>(
-                    <Route key={route.path} path={route.path} element={route.element}/>
-                ))}
-                </Routes>
-            </BrowserRouter>,
+            <AuthContext.Provider value={{
+                loginState,
+                setLoginState,
+            }}>
+                <BrowserRouter>
+                    <ul style={{ display: 'flex' }}>
+                        {navbarItems.map(item => (
+                            <li style={{ margin: 20 }}><Link to={item.to}>{item.title}</Link></li>
+                        ))
+                        }
+                    </ul>
+                    <Routes>
+                        {router.map(route => (
+                            <Route key={route.path} path={route.path} element={route.element} />
+                        ))}
+                    </Routes>
+                </BrowserRouter>
 
-            {/* <select value={pageSelected} onChange={handleChange}>
-                <option value={OPTIONS.Home}>Home Page</option>
-                <option value={OPTIONS.Post}>Post Page</option>
-                <option value={OPTIONS.Posts}>Post List Page</option>
-                <option value={OPTIONS.Login}>Login Page</option>
-            </select>
-            {getPage()} */}
+            </AuthContext.Provider>
         </div>
     )
 };
